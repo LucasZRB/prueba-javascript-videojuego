@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    font-size: 1.6rem;
+    background-color: deepskyblue;
+    color: ivory;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.game-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+canvas {
+    border: 4px solid teal;
+    border-radius: 8px;
+    background-color: mediumspringgreen;
+}
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 100%;
+}
+button {
+    width: 100px;
+    margin: 0;
+    padding: 5px 20px;
+    border-radius: 8px;
+    border-color: cadetblue;
+    background-color: blueviolet;
+    font-family: inherit;
+}
+
+button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.info {
+    display: flex;
+    flex-wrap: wrap;
+    margin: o auto;
+    width: 80%;
+    max-width: 460px;
+}
+p {
+    display: block;
+    margin: 0;
+    width: 100%;
+}
+
+@media (max-width: 440px) {
+    button {
+        margin-top: 25px;
+    }
+    #up, #down {
+        margin-left: 100%;
+        margin-right: 100%;
+    }
+}
