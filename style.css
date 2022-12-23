@@ -28,23 +28,53 @@ canvas {
 }
 .buttons-container {
     display: flex;
+    flex-wrap: wrap;
+    *justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.buttons-container--principal {
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 auto;
-    width: 100%;
+    *width: 100%;
 }
-button {
-    width: 100px;
-    margin: 0;
-    padding: 5px 20px;
-    border-radius: 8px;
+.buttons-container--principal button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     border-color: cadetblue;
     background-color: blueviolet;
-    font-family: inherit;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Feather-arrows-arrow-up.svg/1024px-Feather-arrows-arrow-up.svg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.buttons-container--secundary button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-color: cadetblue;
+    background-color: yellow;
+    background-image: url('https://cdn0.iconfinder.com/data/icons/line-design-basic-set-10/24/refresh-page-F5-512.png');
+    background-size: cover;
+    background-position: -1px;
+    background-repeat: no-repeat;
 }
 
-button:not(:last-child) {
-    margin-right: 10px;
+.buttons-container--principal #left {
+    transform: rotate(-90deg);
+}
+.buttons-container--principal #right {
+    transform: rotate(90deg);
+}
+.buttons-container--principal #down {
+    transform: rotate(180deg);
+}
+
+.buttons-container--principal button:not(:last-child) {
+    margin: 0 10px;
 }
 
 .info {
@@ -61,11 +91,12 @@ p {
 }
 
 @media (max-width: 440px) {
-    button {
-        margin-top: 25px;
-    }
     #up, #down {
-        margin-left: 100%;
-        margin-right: 100%;
+        margin: 0 30%;
+    }
+}
+@media (min-width: 441px) {
+    #down {
+        margin: 0 10px;
     }
 }

@@ -5,50 +5,55 @@
 
 const emojis = {
     '-': ' ',
-    'O': '🚪',
-    'X': '💣',
-    'I': '🎁',
-    'PLAYER': '💀',
-    'BOMB_COLLISION': '🔥',
+    'M': '🏔',
+    'Z': '🧟‍♂️',
+    'T': '🌳',
+    'H': '🏠',
+    'B': '🩸',
+    'R': '🟦',
+    'PLAYER': '🚶‍♂️',
+    'PLAYER_RUNNER': '🏃‍♂️',
+    'ZOMBIE_COLLISION': '🧠',
     'GAME_OVER': '👎',
     'WIN': '🏆',
     'HEART': '❤️',
+    'ROTTEN_HEART': '💚'
 };
 
 const maps = [];
 maps.push([
-    'IXXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    '-XXXXXXXXX',
-    'OXXXXXXXXX'
+    'HZZZZZZZZT',
+    '-ZZZZZZZZT',
+    'BZZZZZZZZT',
+    '-ZZZZZZZZT',
+    '-ZZZZZZZZT',
+    '-ZZZZZZZZT',
+    'BZZZZZZZZT',
+    '-ZZZZZZZZT',
+    '-ZZZZZZZZT',
+    'MZZZZZZZZT'
 ]);
 maps.push([
-    'O--XXXXXXX',
-    'X--XXXXXXX',
-    'XX----XXXX',
-    'X--XX-XXXX',
-    'X-XXX--XXX',
-    'X-XXXX-XXX',
-    'XX--XX--XX',
-    'XX--XXX-XX',
-    'XXXX---IXX',
-    'XXXXXXXXXX'
+    'M--ZZZTZZZ',
+    'Z--ZZZZZZZ',
+    'ZZ---BZZTZ',
+    'ZB-ZZ-ZZZZ',
+    'Z-ZZZ--ZZZ',
+    'ZBZZTZ-ZZZ',
+    'ZZ--ZZ--ZZ',
+    'ZZ-BZZZ-ZZ',
+    'ZZZZ-B-HZZ',
+    'ZZZZZZZZZZ'
 ]);
 maps.push([
-    'I-----XXXX',
-    'XXXXX-XXXX',
-    'XX----XXXX',
-    'XX-XXXXXXX',
-    'XX-----XXX',
-    'XXXXXX-XXX',
-    'XX-----XXX',
-    'XX-XXXXXXX',
-    'XX-----OXX',
-    'XXXXXXXXXX'
+    'H----BZTZZ',
+    'ZZZZZ-ZZZZ',
+    'ZZ-B--ZZTZ',
+    'ZZ-ZZZTZZZ',
+    'ZZ--B--ZZZ',
+    'ZZZZZZ-ZZZ',
+    'ZZ-----ZZZ',
+    'ZZBZZZZZZZ',
+    'ZZ-----MZZ',
+    'ZZZZZZZZZZ'
 ]);

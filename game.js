@@ -4,21 +4,24 @@ const buttonUp = document.getElementById('up');
 const buttonLeft = document.getElementById('left');
 const buttonRight = document.getElementById('right');
 const buttonDown = document.getElementById('down');
+const buttonReload = document.getElementById('reload');
 const contentLives = document.getElementById('lives');
 const contentTime = document.getElementById('time');
 const contentRecord = document.getElementById('record');
 const contentResult = document.getElementById('result');
-
+// localStorage.removeItem('record_time')
 window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize);
 
 let canvasSize;
 let elemenstsSize;
 let level = 0;
+let totalLives = 3;
 let lives = 3;
 let timeStart;
 let timePlayer;
 let timeInterval;
+let isAlive = true;
 const adjustX = +4;
 const adjustY = -4;
 
@@ -32,6 +35,10 @@ const goalPosition = {
 };
 const deadPositions = [];
 
+const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+}
+
 function setCanvasSize() {
     canvasSize = (window.innerHeight > window.innerWidth 
         ? window.innerWidth 
@@ -42,21 +49,38 @@ function setCanvasSize() {
 
     elemenstsSize = canvasSize / 10;
 
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
+
     startGame();
 }
 
 function levelWin() {
-    console.log('Bien')
     level++;
     startGame();
 }
 
 function gameWin() {
-    console.log('Terminado')
     clearInterval(timeInterval);
 
     const recordTime = localStorage.getItem('record_time');
     const playerTime = Date.now() - timeStart;
+    const map = maps[level-1];
+    const mapRowCols = map.map(col => col.split(''));
+
+    game.clearRect(0, 0, canvasSize,canvasSize);
+    mapRowCols.forEach((y, indexY) => {
+        y.forEach((x, indexX) => {
+            const posX = elemenstsSize * (indexX + 1);
+            const posY = elemenstsSize * (indexY + 1);
+
+            game.fillText(emojis[x], posX+adjustX, posY+adjustY);
+
+            if (x === 'H') {
+                game.fillText(emojis['PLAYER'], posX+adjustX, posY+adjustY);
+            }
+        });
+    });
 
     if (recordTime) {
         if (recordTime > playerTime) {
@@ -70,7 +94,7 @@ function gameWin() {
 }
 
 function showLives() {
-    const arrayLives = Array(lives).fill(emojis['HEART']);
+    const arrayLives = Array(totalLives).fill(emojis['HEART'], 0, lives).fill(emojis['ROTTEN_HEART'], lives);
 
     contentLives.innerHTML = arrayLives.join(' ');
 }
@@ -93,18 +117,34 @@ function showTime() {
 }
 
 function showRecord() {
-    contentRecord.innerHTML = timeFormat(localStorage.getItem('record_time'));
+    const recordTime = localStorage.getItem('record_time');
+
+    if(recordTime) {
+        contentRecord.innerHTML = `${timeFormat(recordTime)} 🏁`;
+    } else {
+        contentRecord.innerHTML = 'Sin records previos'
+    }
 }
 
-function levelFail() {
+function reloadGame() {
+    level = 0;
+    lives = 3;
+    timeStart = undefined;
+    clearInterval(timeInterval);
+    playerPosition.x = null;
+    playerPosition.y = null;
+    startGame();
+}
+
+async function levelFail() {
     lives--;
+    isAlive = false
+    await delay(500);
+    isAlive = true
 
     if (lives < 1) {
-        level = 0;
-        lives = 3;
-        timeStart = undefined;
+        return reloadGame();
     }
-    console.log('Muerto', lives)
     playerPosition.x = null;
     playerPosition.y = null;
     startGame();
@@ -125,12 +165,15 @@ function movePlayer() {
         levelWin();
     } else if (deadCollision) {
         levelFail();
+        return game.fillText(emojis['ZOMBIE_COLLISION'], playerPosition.x+adjustX, playerPosition.y+adjustY);
     }
 
     game.fillText(emojis['PLAYER'], playerPosition.x+adjustX, playerPosition.y+adjustY);
 }
 
 function startGame() {
+    if (!isAlive) return
+
     game.font = `${elemenstsSize-2}px Verdana`;
     game.textAlign = 'end';
     showLives();
@@ -155,13 +198,13 @@ function startGame() {
             const posX = elemenstsSize * (indexX + 1);
             const posY = elemenstsSize * (indexY + 1);
 
-            if (x === 'O' && !playerPosition.x && !playerPosition.y) {
+            if (x === 'M' && !playerPosition.x && !playerPosition.y) {
                 playerPosition.x = posX;
                 playerPosition.y = posY;
-            } else if (x === 'I') {
+            } else if (x === 'H') {
                 goalPosition.x = posX;
                 goalPosition.y = posY;
-            } else if (x === 'X') {
+            } else if (x === 'Z') {
                 deadPositions.push({
                     x: posX,
                     y: posY
@@ -173,11 +216,6 @@ function startGame() {
     });
 
     movePlayer();
-    // game.fillRect(0,0,100,100);
-    // game.clearRect(0,0,50,50);
-    // game.font = '25px Verdana';
-    // game.fillStyle = 'orange';
-    // game.fillText('Hora', 100, 100);
 }
 
 function moveByKeys(event) {
@@ -230,3 +268,4 @@ buttonUp.addEventListener('click', moveUp);
 buttonLeft.addEventListener('click', moveLeft);
 buttonRight.addEventListener('click', moveRight);
 buttonDown.addEventListener('click', moveDown);
+buttonReload.addEventListener('click', reloadGame);
